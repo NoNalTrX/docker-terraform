@@ -1,0 +1,11 @@
+FROM ubuntu:trusty
+
+RUN apt-get update && apt-get install -y nginx
+
+EXPOSE 80
+
+RUN sed -i "s/\/etc\/nginx\/sites-enabled\/\*/\/etc\/nginx\/sites-enabled\/\*\/*/g" /etc/nginx/nginx.conf
+
+RUN rm /etc/nginx/sites-enabled/default
+
+ENTRYPOINT [ "nginx", "-g", "daemon off;"]

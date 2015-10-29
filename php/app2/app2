@@ -1,0 +1,19 @@
+server {
+        listen 80;
+        listen [::]:80;
+
+        #root /usr/share/nginx/html;
+        root /var/www/app2;
+        index index.html index.htm;
+
+        # Make site accessible from http://localhost/
+        server_name  localhost;
+
+    location ~* \.php$ {
+        fastcgi_index   index.php;
+        fastcgi_pass    unix:/var/run/app2/php5-fpm-app2.sock;
+        include         fastcgi_params;
+        fastcgi_param   SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+        fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+    }
+}
